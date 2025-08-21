@@ -1,0 +1,69 @@
+import 'package:dio/dio.dart';
+import 'package:movies_app/api/client/api_result.dart';
+import 'package:movies_app/core/constants/app_text.dart';
+import 'package:movies_app/core/exceptions/response_exception.dart';
+
+class DioExceptions extends Failure {
+  DioExceptions({required super.responseException});
+
+  factory DioExceptions.handleError(dynamic error) {
+    if (error is DioException) {
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.connectionTimeout,
+            ),
+          );
+        case DioExceptionType.sendTimeout:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.sendTimeout,
+            ),
+          );
+        case DioExceptionType.receiveTimeout:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.receiveTimeout,
+            ),
+          );
+        case DioExceptionType.badResponse:
+          return _handleBadResponse(error.response);
+        case DioExceptionType.cancel:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.requestCancelled,
+            ),
+          );
+        case DioExceptionType.unknown:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.networkError,
+            ),
+          );
+        case DioExceptionType.connectionError:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.connectionError,
+            ),
+          );
+        default:
+          return DioExceptions(
+            responseException: const ResponseException(
+              message: AppText.unexpectedErrorOccurred,
+            ),
+          );
+      }
+    } else {
+      return DioExceptions(
+        responseException: ResponseException(message: error.toString()),
+      );
+    }
+  }
+
+  static DioExceptions _handleBadResponse(Response? response) {
+    return DioExceptions(
+      responseException: ResponseException.handleException(response: response),
+    );
+  }
+}
