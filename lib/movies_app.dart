@@ -28,7 +28,7 @@ class MoviesApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: RouteNames.login,
+          initialRoute: RouteNames.onboarding,
         ),
       ),
     );
