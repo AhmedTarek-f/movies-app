@@ -6,13 +6,13 @@ import 'package:movies_app/core/app_theme.dart';
 import 'package:movies_app/core/global_cubit/global_cubit.dart';
 import 'package:movies_app/core/global_cubit/global_state.dart';
 import 'package:movies_app/core/router/app_router.dart';
-import 'package:movies_app/core/router/route_names.dart';
 
 class MoviesApp extends StatelessWidget {
   const MoviesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final globalCubit = BlocProvider.of<GlobalCubit>(context);
     return ScreenUtilInit(
       designSize: const Size(430, 932),
       minTextAdapt: true,
@@ -28,7 +28,7 @@ class MoviesApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: RouteNames.onboarding,
+          initialRoute: globalCubit.redirectedScreen,
         ),
       ),
     );

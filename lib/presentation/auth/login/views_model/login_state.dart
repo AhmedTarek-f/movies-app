@@ -1,18 +1,33 @@
-import 'package:movies_app/core/exceptions/response_exception.dart';
+import 'package:equatable/equatable.dart';
+import 'package:movies_app/api/client/api_result.dart';
+import 'package:movies_app/core/state_status/state_status.dart';
 
-sealed class LoginState {}
+class LoginState extends Equatable {
+  final StateStatus<Result<void>> loginStatus;
+  const LoginState({this.loginStatus = const StateStatus.initial()});
 
-final class LoginInitial extends LoginState {}
+  @override
+  List<Object?> get props => [loginStatus];
 
-final class EnableAutoValidateModeState extends LoginState {}
-
-final class ChangeObscureState extends LoginState {}
-
-final class LoginSuccessState extends LoginState {}
-
-final class LoginFailureState extends LoginState {
-  LoginFailureState({required this.errorData});
-  final ResponseException errorData;
+  LoginState copyWith({StateStatus<Result<void>>? loginStatus}) {
+    return LoginState(loginStatus: loginStatus ?? this.loginStatus);
+  }
 }
 
-final class LoginLoadingState extends LoginState {}
+final class EnableAutoValidateModeState extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class ChangeObscureState extends LoginState {
+  ChangeObscureState({this.isObscure = true});
+  bool isObscure;
+
+  ChangeObscureState copyWith2({required bool isObscurePassword}) {
+    isObscurePassword = !isObscurePassword;
+    return ChangeObscureState(isObscure: isObscurePassword);
+  }
+
+  @override
+  List<Object?> get props => [isObscure];
+}

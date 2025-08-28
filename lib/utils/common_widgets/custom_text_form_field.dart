@@ -52,9 +52,10 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLength;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return TextFormField(
       onTap: onTap,
-      style: style ?? Theme.of(context).textTheme.bodyLarge,
+      style: style ?? theme.textTheme.bodyLarge,
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
@@ -65,27 +66,22 @@ class CustomTextFormField extends StatelessWidget {
             contentPadding ??
             REdgeInsets.symmetric(horizontal: 19, vertical: 18),
         filled: true,
-        fillColor: Theme.of(context).colorScheme.shadow,
-        label: Text(
-          label,
-          style: labelStyle ?? Theme.of(context).textTheme.bodyLarge,
-        ),
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyLarge,
+        fillColor: theme.colorScheme.shadow,
+        label: Text(label, style: labelStyle ?? theme.textTheme.bodyLarge),
+        hintStyle: hintStyle ?? theme.textTheme.bodyLarge,
         hintText: hintText?.tr(),
         focusedBorder: buildOutlinedBorder(
-          borderColor: Theme.of(context).colorScheme.primary,
+          borderColor: theme.colorScheme.primary,
         ),
         enabledBorder: buildOutlinedBorder(
-          borderColor: Theme.of(context).colorScheme.shadow,
+          borderColor: theme.colorScheme.shadow,
         ),
         focusedErrorBorder: buildOutlinedBorder(
-          borderColor: Theme.of(context).colorScheme.error,
+          borderColor: theme.colorScheme.error,
         ),
-        errorBorder: buildOutlinedBorder(
-          borderColor: Theme.of(context).colorScheme.error,
-        ),
+        errorBorder: buildOutlinedBorder(borderColor: theme.colorScheme.error),
         disabledBorder: buildOutlinedBorder(
-          borderColor: Theme.of(context).colorScheme.secondary,
+          borderColor: theme.colorScheme.secondary,
         ),
         errorMaxLines: 2,
         prefixIcon: prefixIcon,
@@ -96,8 +92,8 @@ class CustomTextFormField extends StatelessWidget {
             suffixIconConstraints ??
             BoxConstraints(maxWidth: 60.r, maxHeight: 60.r),
         suffixIcon: suffixIcon,
-        errorStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primaryContainer,
+        errorStyle: theme.textTheme.bodyMedium?.copyWith(
+          color: theme.colorScheme.error,
         ),
       ),
       maxLength: maxLength,

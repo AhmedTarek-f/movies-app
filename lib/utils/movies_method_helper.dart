@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 abstract class MoviesMethodHelper {
-  // static UserDataEntity? userData;
+  static User? userData;
 }

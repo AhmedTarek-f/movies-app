@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/constants/app_icons.dart';
 import 'package:movies_app/core/constants/app_text.dart';
 import 'package:movies_app/presentation/auth/login/views_model/login_cubit.dart';
+import 'package:movies_app/presentation/auth/login/views_model/login_intent.dart';
 import 'package:movies_app/presentation/auth/login/views_model/login_state.dart';
 import 'package:movies_app/utils/common_widgets/custom_text_form_field.dart';
 import 'package:movies_app/utils/validations.dart';
@@ -14,17 +15,17 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<LoginCubit>(context);
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => current is EnableAutoValidateModeState,
       builder: (context, state) => Form(
-        key: controller.loginFormKey,
-        autovalidateMode: controller.autoValidateMode,
+        key: loginCubit.loginFormKey,
+        autovalidateMode: loginCubit.autoValidateMode,
         child: Column(
           children: [
             CustomTextFormField(
               label: AppText.email,
-              controller: controller.emailController,
+              controller: loginCubit.emailController,
               prefixIcon: RPadding(
                 padding: const EdgeInsets.only(left: 19, right: 8),
                 child: SvgPicture.asset(
@@ -44,7 +45,7 @@ class LoginForm extends StatelessWidget {
               buildWhen: (previous, current) => current is ChangeObscureState,
               builder: (context, state) => CustomTextFormField(
                 label: AppText.password,
-                controller: controller.passwordController,
+                controller: loginCubit.passwordController,
                 prefixIcon: RPadding(
                   padding: const EdgeInsets.only(left: 19, right: 8),
                   child: SvgPicture.asset(
@@ -56,10 +57,10 @@ class LoginForm extends StatelessWidget {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () {
-                    controller.toggleObscure();
+                    loginCubit.doIntent(intent: ToggleObscurePasswordIntent());
                   },
                   icon: Icon(
-                    controller.isObscure
+                    (state is ChangeObscureState ? state.isObscure : true)
                         ? Icons.visibility_off
                         : Icons.visibility,
                     color: Theme.of(context).colorScheme.secondary,
@@ -68,7 +69,9 @@ class LoginForm extends StatelessWidget {
                 ),
                 obscuringCharacter: "*",
                 hintText: AppText.passwordHint,
-                obscureText: controller.isObscure,
+                obscureText: (state is ChangeObscureState
+                    ? state.isObscure
+                    : true),
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.visiblePassword,
                 validator: (value) =>

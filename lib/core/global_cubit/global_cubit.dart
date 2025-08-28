@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/cache/shared_preferences_helper.dart';
 import 'package:movies_app/core/constants/const_keys.dart';
 import 'package:movies_app/core/global_cubit/global_state.dart';
+import 'package:movies_app/core/router/route_names.dart';
 
 @injectable
 class GlobalCubit extends Cubit<GlobalState> {
@@ -12,12 +13,14 @@ class GlobalCubit extends Cubit<GlobalState> {
   late int languageSelectedIndex;
   late bool isArLanguage;
   bool isDeleteAccountLoading = false;
+  late final String redirectedScreen;
 
   void onInit() {
     isArLanguage = _sharedPreferencesHelper.getBool(
       key: ConstKeys.isArLanguage,
     );
     languageSelectedIndex = isArLanguage ? 1 : 0;
+    setRedirectedScreen();
   }
 
   Future<void> onLanguageIndexChanged({required int index}) async {
@@ -37,6 +40,17 @@ class GlobalCubit extends Cubit<GlobalState> {
       );
       isArLanguage = true;
       emit(ChangeLanguageIndexState(selectedLang: "ar"));
+    }
+  }
+
+  void setRedirectedScreen() {
+    final isLoginScreen = _sharedPreferencesHelper.getBool(
+      key: ConstKeys.isLoginScreen,
+    );
+    if (isLoginScreen) {
+      redirectedScreen = RouteNames.login;
+    } else {
+      redirectedScreen = RouteNames.onboarding;
     }
   }
 }

@@ -17,6 +17,7 @@ class OnboardingCardDetails extends StatelessWidget {
     final onboardingCubit = BlocProvider.of<OnboardingCubit>(context);
 
     return BlocBuilder<OnboardingCubit, OnboardingState>(
+      buildWhen: (previous, current) => current is! FinishState,
       builder: (context, state) {
         final card = Container(
           key: ValueKey(state.index),
@@ -78,8 +79,10 @@ class OnboardingCardDetails extends StatelessWidget {
               ),
               const RSizedBox(height: 24),
               CustomElevatedButton(
-                onPressed: () {
-                  onboardingCubit.doIntent(intent: OnboardingNextIntent());
+                onPressed: () async {
+                  await onboardingCubit.doIntent(
+                    intent: OnboardingNextIntent(),
+                  );
                 },
                 buttonTitle: state.onboardingData!.buttonText,
               ),

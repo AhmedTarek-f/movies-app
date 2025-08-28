@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/router/route_names.dart';
 import 'package:movies_app/presentation/onboarding/views/widgets/onboarding_card_details.dart';
 import 'package:movies_app/presentation/onboarding/views_model/onboarding_cubit.dart';
 import 'package:movies_app/presentation/onboarding/views_model/onboarding_state.dart';
@@ -13,9 +14,10 @@ class OnboardingViewBody extends StatelessWidget {
       listenWhen: (previous, current) => current is FinishState,
       listener: (BuildContext context, OnboardingState state) {
         if (state is FinishState) {
-          // Navigator.of(context).pushReplacementNamed(RouteNames.login);
+          Navigator.of(context).pushReplacementNamed(RouteNames.login);
         }
       },
+      buildWhen: (previous, current) => current is! FinishState,
       builder: (context, state) => Stack(
         children: [
           Image.asset(state.onboardingData!.image, fit: BoxFit.cover),
