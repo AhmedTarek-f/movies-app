@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/api/client/api_result.dart';
 import 'package:movies_app/data/data_source/login/remote_data_source/login_remote_data_source.dart';
@@ -15,5 +16,10 @@ class LoginRepositoryImpl implements LoginRepository {
     return await _loginRemoteDataSource.loginWithEmailAndPassword(
       request: request,
     );
+  }
+
+  @override
+  Future<Result<UserCredential>> loginWithGoogle() async {
+    return await _loginRemoteDataSource.loginWithGoogle();
   }
 }
