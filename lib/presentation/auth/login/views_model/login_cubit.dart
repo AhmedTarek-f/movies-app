@@ -18,9 +18,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
-  late AutovalidateMode autoValidateMode;
   late GlobalKey<FormState> loginFormKey;
-  ChangeObscureState _obscurePasswordState = ChangeObscureState();
 
   Future<void> doIntent({required LoginIntent intent}) async {
     switch (intent) {
@@ -40,25 +38,20 @@ class LoginCubit extends Cubit<LoginState> {
     loginFormKey = GlobalKey<FormState>();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    autoValidateMode = AutovalidateMode.disabled;
   }
 
   void _enableAutoValidateMode() {
-    autoValidateMode = AutovalidateMode.always;
-    emit(EnableAutoValidateModeState());
+    emit(state.copyWith(autoValidateMode: AutovalidateMode.always));
   }
 
   void _toggleObscure() {
-    _obscurePasswordState = _obscurePasswordState.copyWith2(
-      isObscurePassword: _obscurePasswordState.isObscure,
-    );
-    emit(_obscurePasswordState);
+    emit(state.copyWith(isObscure: !state.isObscure));
   }
 
   Future<void> _login() async {
     if (loginFormKey.currentState!.validate()) {
       emit(state.copyWith(loginStatus: const StateStatus.loading()));
-      var userData = await _loginWithEmailAndPasswordUseCase.invoke(
+      final userData = await _loginWithEmailAndPasswordUseCase.invoke(
         request: LoginRequestEntity(
           email: emailController.text,
           password: passwordController.text,

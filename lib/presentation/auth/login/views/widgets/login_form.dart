@@ -17,10 +17,9 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => current is EnableAutoValidateModeState,
       builder: (context, state) => Form(
         key: loginCubit.loginFormKey,
-        autovalidateMode: loginCubit.autoValidateMode,
+        autovalidateMode: state.autoValidateMode,
         child: Column(
           children: [
             CustomTextFormField(
@@ -41,42 +40,35 @@ class LoginForm extends StatelessWidget {
               validator: (value) => Validations.emailValidation(email: value),
             ),
             const RSizedBox(height: 22.4),
-            BlocBuilder<LoginCubit, LoginState>(
-              buildWhen: (previous, current) => current is ChangeObscureState,
-              builder: (context, state) => CustomTextFormField(
-                label: AppText.password,
-                controller: loginCubit.passwordController,
-                prefixIcon: RPadding(
-                  padding: const EdgeInsets.only(left: 19, right: 8),
-                  child: SvgPicture.asset(
-                    AppIcons.passwordLock,
-                    width: 30.r,
-                    height: 30.r,
-                    fit: BoxFit.contain,
-                  ),
+            CustomTextFormField(
+              label: AppText.password,
+              controller: loginCubit.passwordController,
+              prefixIcon: RPadding(
+                padding: const EdgeInsets.only(left: 19, right: 8),
+                child: SvgPicture.asset(
+                  AppIcons.passwordLock,
+                  width: 30.r,
+                  height: 30.r,
+                  fit: BoxFit.contain,
                 ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    loginCubit.doIntent(intent: ToggleObscurePasswordIntent());
-                  },
-                  icon: Icon(
-                    (state is ChangeObscureState ? state.isObscure : true)
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Theme.of(context).colorScheme.secondary,
-                    size: 28.r,
-                  ),
-                ),
-                obscuringCharacter: "*",
-                hintText: AppText.passwordHint,
-                obscureText: (state is ChangeObscureState
-                    ? state.isObscure
-                    : true),
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.visiblePassword,
-                validator: (value) =>
-                    Validations.passwordValidation(password: value),
               ),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  loginCubit.doIntent(intent: ToggleObscurePasswordIntent());
+                },
+                icon: Icon(
+                  state.isObscure ? Icons.visibility_off : Icons.visibility,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: 28.r,
+                ),
+              ),
+              obscuringCharacter: "*",
+              hintText: AppText.passwordHint,
+              obscureText: state.isObscure,
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) =>
+                  Validations.passwordValidation(password: value),
             ),
           ],
         ),
