@@ -1,5 +1,5 @@
 abstract final class AppText {
-  //Login
+  // Login
   static const String email = "Email";
   static const String emailHint = "Enter your email address";
   static const String password = "Password";
@@ -11,6 +11,18 @@ abstract final class AppText {
   static const String or = "OR";
   static const String loginWithGoogle = "Login With Google";
   static const String loggingYouIn = "loggingYouIn";
+
+  // Signup
+  static const String register = "Register";
+  static const String avatar = "Avatar";
+  static const String name = "Name";
+  static const String nameHint = "Enter your full name";
+  static const String confirmPassword = "Confirm Password";
+  static const String phoneNumber = "Phone Number";
+  static const String phoneNumberHint = "Enter your phone number";
+  static const String createAccount = "Create Account";
+  static const String alreadyHaveAccount = "Already Have Account ?";
+  static const String signingYouUpMessage = "Signing you up...";
 
   // Onboarding
   static const String onboardingTitle1 = "Find Your Next Favorite Movie Here";
