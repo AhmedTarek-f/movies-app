@@ -1,14 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/api/client/api_result.dart';
 import 'package:movies_app/core/state_status/state_status.dart';
-import 'package:movies_app/domain/entities/requests/login_request_entity.dart';
+import 'package:movies_app/domain/entities/requests/login_request_entity/login_request_entity.dart';
 import 'package:movies_app/domain/use_cases/login/login_with_email_and_password_use_case.dart';
 import 'package:movies_app/presentation/auth/login/views_model/login_intent.dart';
 import 'package:movies_app/presentation/auth/login/views_model/login_state.dart';
-import 'package:movies_app/utils/movies_method_helper.dart';
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
@@ -60,7 +58,6 @@ class LoginCubit extends Cubit<LoginState> {
       switch (userData) {
         case Success<void>():
           {
-            MoviesMethodHelper.userData = FirebaseAuth.instance.currentUser;
             emit(state.copyWith(loginStatus: const StateStatus.success(null)));
             break;
           }

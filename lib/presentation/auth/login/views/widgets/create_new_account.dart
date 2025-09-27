@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_text.dart';
+import 'package:movies_app/core/router/route_names.dart';
 
 class CreateNewAccount extends StatelessWidget {
   const CreateNewAccount({super.key});
@@ -19,7 +20,9 @@ class CreateNewAccount extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(RouteNames.signup);
+              },
               borderRadius: BorderRadius.circular(30.r),
               highlightColor: Theme.of(
                 context,

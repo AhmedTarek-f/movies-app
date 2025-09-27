@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/api/client/api_result.dart';
 import 'package:movies_app/data/data_source/login/remote_data_source/login_remote_data_source.dart';
-import 'package:movies_app/domain/entities/requests/login_request_entity.dart';
+import 'package:movies_app/domain/entities/requests/login_request_entity/login_request_entity.dart';
 import 'package:movies_app/domain/repositories/login/login_repository.dart';
 
 @Injectable(as: LoginRepository)

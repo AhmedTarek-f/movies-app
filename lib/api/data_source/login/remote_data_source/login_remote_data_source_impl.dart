@@ -1,15 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/api/client/api_result.dart';
-import 'package:movies_app/api/client/request_mapper.dart';
+import 'package:movies_app/api/models/user_data/user_data_model.dart';
+import 'package:movies_app/api/requests/request_mapper.dart';
 import 'package:movies_app/core/connection_manager/connection_manager.dart';
 import 'package:movies_app/core/constants/app_text.dart';
 import 'package:movies_app/core/exceptions/firebase_exceptions.dart';
 import 'package:movies_app/core/exceptions/response_exception.dart';
 import 'package:movies_app/data/data_source/login/remote_data_source/login_remote_data_source.dart';
-import 'package:movies_app/domain/entities/requests/login_request_entity.dart';
+import 'package:movies_app/domain/entities/requests/login_request_entity/login_request_entity.dart';
+import 'package:movies_app/utils/movies_method_helper.dart';
 
 @Injectable(as: LoginRemoteDataSource)
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
@@ -18,14 +21,27 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
     required LoginRequestEntity request,
   }) async {
     try {
+      final auth = FirebaseAuth.instance;
+      final db = FirebaseFirestore.instance;
       final bool connection = await ConnectionManager.checkConnection();
       if (connection) {
-        final loginRequest = RequestMapper.toLoginRequest(request: request);
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        final loginRequest = RequestMapper.toLoginModelRequest(
+          request: request,
+        );
+        final user = await auth.signInWithEmailAndPassword(
           email: loginRequest.email,
           password: loginRequest.password,
         );
-        return Success<void>(null);
+        if (user.user != null) {
+          final userDoc = await db
+              .collection("Users")
+              .doc(user.user?.uid)
+              .get();
+          MoviesMethodHelper.userData = UserDataModel.fromFireStore(
+            userDoc,
+          ).toUserDataEntity();
+        }
+        return Success<void>(successData: null);
       } else {
         return Failure(
           responseException: const ResponseException(
@@ -77,7 +93,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
         }
         userCredential = await auth.signInWithCredential(credential);
       }
-      return Success(userCredential);
+      return Success(successData: userCredential);
     } on FirebaseAuthException catch (error) {
       return Failure(
         responseException: FirebaseExceptions.firebaseAuth(
