@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 abstract class Loaders {
-  static showSuccessMessage({
+  static void showSuccessMessage({
     Widget? title,
     required String message,
     int secondsDuration = 3,
@@ -34,7 +34,7 @@ abstract class Loaders {
     ).show(context);
   }
 
-  static showWarningMessage({
+  static void showWarningMessage({
     Widget? title,
     required String message,
     int secondsDuration = 3,
@@ -63,7 +63,7 @@ abstract class Loaders {
     ).show(context);
   }
 
-  static showErrorMessage({
+  static void showErrorMessage({
     Widget? title,
     required String message,
     int secondsDuration = 3,

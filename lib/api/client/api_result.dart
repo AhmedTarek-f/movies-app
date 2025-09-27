@@ -1,35 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app/core/connection_manager/connection_manager.dart';
-import 'package:movies_app/core/constants/app_text.dart';
 import 'package:movies_app/core/exceptions/dio_exceptions.dart';
 import 'package:movies_app/core/exceptions/response_exception.dart';
 
 sealed class Result<T> {}
 
 class Success<T> extends Result<T> {
-  final T data;
+  final T successData;
 
-  Success(this.data);
+  Success({required this.successData});
 }
 
 class Failure<T> extends Result<T> {
-  Failure({required this.responseException});
+  Failure({required this.responseException, this.cachedData});
   final ResponseException responseException;
+  final T? cachedData;
 }
 
 Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
   try {
-    final bool connection = await ConnectionManager.checkConnection();
-    if (connection) {
-      final data = await apiCall();
-      return Success(data);
-    } else {
-      return Failure(
-        responseException: const ResponseException(
-          message: AppText.connectionError,
-        ),
-      );
-    }
+    final data = await apiCall();
+    return Success(successData: data);
   } on DioException catch (error) {
     return Failure(
       responseException: DioExceptions.handleError(error).responseException,

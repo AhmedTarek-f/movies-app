@@ -60,6 +60,7 @@ abstract class AppTheme {
       ),
       centerTitle: true,
       surfaceTintColor: AppColors.primary,
+      foregroundColor: AppColors.primary,
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primary,

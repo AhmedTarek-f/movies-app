@@ -8,7 +8,7 @@ class OnboardingEntity extends Equatable {
   final String buttonText;
   final LinearGradient gradientColors;
 
-  OnboardingEntity({
+  const OnboardingEntity({
     required this.title,
     required this.image,
     required this.description,

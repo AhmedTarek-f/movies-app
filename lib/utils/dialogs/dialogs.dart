@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/utils/dialogs/custom_dialog_content.dart';
 
 abstract class Dialogs {
-  static customDialog({
+  static Future customDialog({
     required BuildContext context,
     List<Widget>? actions,
     Widget? content,

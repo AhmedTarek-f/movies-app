@@ -14,7 +14,7 @@ abstract class RequestMapper {
     required SignupRequestEntity request,
   }) {
     return SignupRequestModel(
-      userId: request.userId,
+      userId: request.userId ?? "",
       fullName: request.fullName,
       email: request.email,
       password: request.password,
