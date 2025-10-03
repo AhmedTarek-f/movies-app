@@ -53,4 +53,26 @@ class GlobalCubit extends Cubit<GlobalState> {
       redirectedScreen = RouteNames.onboarding;
     }
   }
+
+  // Future<void> screenRedirect() async{
+  //   final User? user = _auth.currentUser;
+  //   if(user !=null)
+  //   {
+  //     if(user.emailVerified)
+  //     {
+  //
+  //       redirectedScreen = const NavigationViews();
+  //     }
+  //     else{
+  //       redirectedScreen = VerifyEmailView(email: _auth.currentUser?.email);
+  //     }
+  //   }
+  //   else{
+  //     await _deviceStorage.writeIfNull("isFirstTime", true);
+  //     if(_deviceStorage.read("isFirstTime")) redirectedScreen =  const GetStartedView();
+  //     else {
+  //       redirectedScreen = const SignInView();
+  //     }
+  //   }
+  // }
 }

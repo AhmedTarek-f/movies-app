@@ -5,3 +5,5 @@ class InitializeLoginFormIntent extends LoginIntent {}
 class ToggleObscurePasswordIntent extends LoginIntent {}
 
 class LoginWithEmailAndPasswordIntent extends LoginIntent {}
+
+class LoginWithGoogleIntent extends LoginIntent {}
