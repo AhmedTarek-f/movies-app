@@ -67,6 +67,18 @@ abstract final class AppText {
   static const String passwordValidation5 =
       "Password must not exceed 20 characters";
 
+  // Email Verification
+  static const String verificationMessageSent =
+      "Please check your email, a verification message has been sent";
+  static const String verifyYourEmail = "Verify your email address!";
+  static const String verifyNow =
+      "Congratulations! Your Account Awaits:\nVerify Your Email Now";
+  static const String continueText = "Continue";
+  static const String resendEmail = "Resend Email";
+  static const String verified = "Verified";
+  static const String emailVerified =
+      "Congratulations! Your account has been successfully verified";
+
   //Exceptions
   static const String connectionError =
       "Please check your internet connection and try again";

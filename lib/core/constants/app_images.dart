@@ -16,4 +16,6 @@ abstract final class AppImages {
   static const String avatar7 = "assets/images/profile_pic7.png";
   static const String avatar8 = "assets/images/profile_pic8.png";
   static const String avatar9 = "assets/images/profile_pic9.png";
+  static const String deliveredEmailIllustration =
+      "assets/images/email_verification_man.png";
 }

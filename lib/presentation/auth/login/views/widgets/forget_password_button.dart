@@ -10,7 +10,9 @@ class ForgetPasswordButton extends StatelessWidget {
     return Align(
       alignment: AlignmentDirectional.centerEnd,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+
+        },
         borderRadius: BorderRadius.circular(30.r),
         highlightColor: Theme.of(
           context,

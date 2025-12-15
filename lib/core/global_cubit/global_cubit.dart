@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/cache/shared_preferences_helper.dart';
@@ -14,6 +15,7 @@ class GlobalCubit extends Cubit<GlobalState> {
   late bool isArLanguage;
   bool isDeleteAccountLoading = false;
   late final String redirectedScreen;
+  final _auth = FirebaseAuth.instance;
 
   void onInit() {
     isArLanguage = _sharedPreferencesHelper.getBool(
@@ -48,31 +50,19 @@ class GlobalCubit extends Cubit<GlobalState> {
       key: ConstKeys.isLoginScreen,
     );
     if (isLoginScreen) {
-      redirectedScreen = RouteNames.login;
+      if (_auth.currentUser != null) {
+        if (_auth.currentUser?.emailVerified ?? false) {
+          redirectedScreen = RouteNames.signup;
+          // redirectedScreen = const MoviesNavigationView();
+        } else {
+          redirectedScreen = RouteNames.emailVerification;
+        }
+      }
+      else{
+        redirectedScreen = RouteNames.login;
+      }
     } else {
       redirectedScreen = RouteNames.onboarding;
     }
   }
-
-  // Future<void> screenRedirect() async{
-  //   final User? user = _auth.currentUser;
-  //   if(user !=null)
-  //   {
-  //     if(user.emailVerified)
-  //     {
-  //
-  //       redirectedScreen = const NavigationViews();
-  //     }
-  //     else{
-  //       redirectedScreen = VerifyEmailView(email: _auth.currentUser?.email);
-  //     }
-  //   }
-  //   else{
-  //     await _deviceStorage.writeIfNull("isFirstTime", true);
-  //     if(_deviceStorage.read("isFirstTime")) redirectedScreen =  const GetStartedView();
-  //     else {
-  //       redirectedScreen = const SignInView();
-  //     }
-  //   }
-  // }
 }

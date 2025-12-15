@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_animations.dart';
 import 'package:movies_app/core/constants/app_text.dart';
+import 'package:movies_app/core/router/route_names.dart';
 import 'package:movies_app/presentation/auth/signup/views/widgets/create_account_button.dart';
 import 'package:movies_app/presentation/auth/signup/views/widgets/have_account.dart';
 import 'package:movies_app/presentation/auth/signup/views/widgets/signup_avatars.dart';
@@ -34,7 +35,10 @@ class SignupViewBody extends StatelessWidget {
           );
         } else if (state.signupStatus.isSuccess) {
           FullScreenLoader.stopLoading(context: context);
-          Loaders.showSuccessMessage(message: "Registered", context: context);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteNames.emailVerification,
+            (route) => false,
+          );
         }
       },
       child: const SingleChildScrollView(
