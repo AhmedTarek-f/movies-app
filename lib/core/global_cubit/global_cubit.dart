@@ -3,66 +3,82 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/cache/shared_preferences_helper.dart';
 import 'package:movies_app/core/constants/const_keys.dart';
+import 'package:movies_app/core/global_cubit/global_intent.dart';
 import 'package:movies_app/core/global_cubit/global_state.dart';
 import 'package:movies_app/core/router/route_names.dart';
 
 @injectable
 class GlobalCubit extends Cubit<GlobalState> {
   final SharedPreferencesHelper _sharedPreferencesHelper;
-  GlobalCubit(this._sharedPreferencesHelper) : super(GlobalInitial());
+  final FirebaseAuth _auth;
 
-  late int languageSelectedIndex;
-  late bool isArLanguage;
-  bool isDeleteAccountLoading = false;
-  late final String redirectedScreen;
-  final _auth = FirebaseAuth.instance;
+  GlobalCubit(this._sharedPreferencesHelper, this._auth)
+    : super(const GlobalState());
 
-  void onInit() {
-    isArLanguage = _sharedPreferencesHelper.getBool(
-      key: ConstKeys.isArLanguage,
-    );
-    languageSelectedIndex = isArLanguage ? 1 : 0;
-    setRedirectedScreen();
-  }
-
-  Future<void> onLanguageIndexChanged({required int index}) async {
-    if (languageSelectedIndex != index && index == 0) {
-      languageSelectedIndex = index;
-      await _sharedPreferencesHelper.saveBool(
-        key: ConstKeys.isArLanguage,
-        value: false,
-      );
-      isArLanguage = false;
-      emit(ChangeLanguageIndexState(selectedLang: "en"));
-    } else if (languageSelectedIndex != index && index == 1) {
-      languageSelectedIndex = index;
-      await _sharedPreferencesHelper.saveBool(
-        key: ConstKeys.isArLanguage,
-        value: true,
-      );
-      isArLanguage = true;
-      emit(ChangeLanguageIndexState(selectedLang: "ar"));
+  Future<void> doIntent({required GlobalIntent intent}) async {
+    switch (intent) {
+      case GlobalInitializationIntent():
+        _onInit();
+        break;
+      case ChangeLanguageIntent():
+        await _changedLanguageIndex(
+          newSelectedLanguage: intent.newSelectedLanguage,
+        );
+        break;
     }
   }
 
-  void setRedirectedScreen() {
+  void _onInit() {
+    _getSelectedLanguage();
+    _setRedirectedScreen();
+  }
+
+  void _getSelectedLanguage() {
+    final isArLanguage = _sharedPreferencesHelper.getBool(
+      key: ConstKeys.isArLanguage,
+    );
+    if (isArLanguage) {
+      emit(state.copyWith(selectedLanguage: Language.arabic));
+    } else {
+      emit(state.copyWith(selectedLanguage: Language.english));
+    }
+  }
+
+  void _setRedirectedScreen() {
     final isLoginScreen = _sharedPreferencesHelper.getBool(
       key: ConstKeys.isLoginScreen,
     );
     if (isLoginScreen) {
       if (_auth.currentUser != null) {
         if (_auth.currentUser?.emailVerified ?? false) {
-          redirectedScreen = RouteNames.signup;
-          // redirectedScreen = const MoviesNavigationView();
+          emit(state.copyWith(redirectedScreen: RouteNames.signup));
+          // emit(state.copyWith(redirectedScreen: RouteNames.moviesNavigationView));
         } else {
-          redirectedScreen = RouteNames.emailVerification;
+          emit(state.copyWith(redirectedScreen: RouteNames.emailVerification));
         }
-      }
-      else{
-        redirectedScreen = RouteNames.login;
+      } else {
+        emit(state.copyWith(redirectedScreen: RouteNames.login));
       }
     } else {
-      redirectedScreen = RouteNames.onboarding;
+      emit(state.copyWith(redirectedScreen: RouteNames.onboarding));
+    }
+  }
+
+  Future<void> _changedLanguageIndex({
+    required Language newSelectedLanguage,
+  }) async {
+    if (newSelectedLanguage == Language.english) {
+      await _sharedPreferencesHelper.saveBool(
+        key: ConstKeys.isArLanguage,
+        value: false,
+      );
+      emit(state.copyWith(selectedLanguage: Language.english));
+    } else {
+      await _sharedPreferencesHelper.saveBool(
+        key: ConstKeys.isArLanguage,
+        value: true,
+      );
+      emit(state.copyWith(selectedLanguage: Language.arabic));
     }
   }
 }

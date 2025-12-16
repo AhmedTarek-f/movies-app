@@ -12,24 +12,24 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final globalCubit = BlocProvider.of<GlobalCubit>(context);
     return ScreenUtilInit(
       designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => BlocBuilder<GlobalCubit, GlobalState>(
-        buildWhen: (previous, current) => current is ChangeLanguageIndexState,
-        builder: (context, state) => MaterialApp(
-          title: 'Movies',
-          debugShowCheckedModeBanner: false,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.dark,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: globalCubit.redirectedScreen,
-        ),
+        builder: (context, state) => state.redirectedScreen != null
+            ? MaterialApp(
+                title: 'Movies',
+                debugShowCheckedModeBanner: false,
+                darkTheme: AppTheme.darkTheme,
+                themeMode: ThemeMode.dark,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                initialRoute: state.redirectedScreen,
+              )
+            : const SizedBox.shrink(),
       ),
     );
   }

@@ -5,23 +5,23 @@ import 'package:movies_app/api/client/api_result.dart';
 import 'package:movies_app/api/models/user_data/user_data_model.dart';
 import 'package:movies_app/api/requests/request_mapper.dart';
 import 'package:movies_app/core/connection_manager/connection_manager.dart';
-import 'package:movies_app/core/constants/app_text.dart';
-import 'package:movies_app/core/exceptions/firebase_exceptions.dart';
-import 'package:movies_app/core/exceptions/response_exception.dart';
-import 'package:movies_app/data/data_source/signup/remote_data_source/signup_remote_data_source.dart';
+import 'package:movies_app/core/constants/const_keys.dart';
+import 'package:movies_app/data/data_source/signup/signup_data_source.dart';
 import 'package:movies_app/domain/entities/requests/signup_request/signup_request_entity.dart';
 import 'package:movies_app/utils/movies_method_helper.dart';
 
-@Injectable(as: SignupRemoteDataSource)
-class SignupRemoteDataSourceImpl implements SignupRemoteDataSource {
+@Injectable(as: SignupDataSource)
+class SignupRemoteDataSourceImpl implements SignupDataSource {
+  final FirebaseFirestore _firestore;
+
+  const SignupRemoteDataSourceImpl(this._firestore);
+
   @override
   Future<Result<void>> signupWithEmailAndPassword({
     required SignupRequestEntity request,
   }) async {
-    try {
-      final db = FirebaseFirestore.instance;
-      final bool connection = await ConnectionManager.checkConnection();
-      if (connection) {
+    return await ConnectionManager.userConnectionResult(
+      apiDataSource: () async {
         final signupRequest = RequestMapper.toSignupModelRequest(
           request: request,
         );
@@ -39,37 +39,13 @@ class SignupRemoteDataSourceImpl implements SignupRemoteDataSource {
           historyListIds: signupRequest.historyListIds,
           watchListIds: signupRequest.watchListIds,
         );
-        await db
-            .collection("Users")
+        await _firestore
+            .collection(ConstKeys.users)
             .doc(userCredential.user?.uid)
             .set(userDataModel.toFireStore());
         MoviesMethodHelper.userData = userDataModel.toUserDataEntity();
         return Success<void>(successData: null);
-      } else {
-        return Failure(
-          responseException: const ResponseException(
-            message: AppText.connectionError,
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (error) {
-      return Failure(
-        responseException: FirebaseExceptions.firebaseAuth(
-          error,
-        ).responseException,
-      );
-    } on FirebaseException catch (error) {
-      return Failure(
-        responseException: FirebaseExceptions.firebaseExceptions(
-          error,
-        ).responseException,
-      );
-    } catch (error) {
-      return Failure(
-        responseException: ResponseException(
-          message: "${AppText.unknownErrorMessage} ${error.toString()}",
-        ),
-      );
-    }
+      },
+    );
   }
 }

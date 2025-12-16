@@ -1,8 +1,35 @@
-sealed class GlobalState {}
+import 'package:equatable/equatable.dart';
 
-final class GlobalInitial extends GlobalState {}
+enum Language { arabic, english }
 
-final class ChangeLanguageIndexState extends GlobalState {
-  ChangeLanguageIndexState({required this.selectedLang});
-  final String selectedLang;
+final class GlobalState extends Equatable {
+  final bool isRedirectedScreenLoaded;
+  final Language selectedLanguage;
+  final String? redirectedScreen;
+
+  const GlobalState({
+    this.isRedirectedScreenLoaded = false,
+    this.selectedLanguage = Language.english,
+    this.redirectedScreen,
+  });
+
+  GlobalState copyWith({
+    bool? isRedirectedScreenLoaded,
+    Language? selectedLanguage,
+    String? redirectedScreen,
+  }) {
+    return GlobalState(
+      isRedirectedScreenLoaded:
+          isRedirectedScreenLoaded ?? this.isRedirectedScreenLoaded,
+      selectedLanguage: selectedLanguage ?? this.selectedLanguage,
+      redirectedScreen: redirectedScreen ?? this.redirectedScreen,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    isRedirectedScreenLoaded,
+    selectedLanguage,
+    redirectedScreen,
+  ];
 }
