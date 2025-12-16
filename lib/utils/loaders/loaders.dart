@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-abstract class Loaders {
+abstract final class Loaders {
   static void showSuccessMessage({
     Widget? title,
     required String message,

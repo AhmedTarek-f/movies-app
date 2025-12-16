@@ -14,7 +14,7 @@ abstract class AppTheme {
       shadow: AppColors.gray,
       error: AppColors.red,
       seedColor: Colors.deepPurple,
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
     ),
     textTheme: TextTheme(
       displaySmall: TextStyle(

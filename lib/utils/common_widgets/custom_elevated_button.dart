@@ -26,13 +26,14 @@ class CustomElevatedButton extends StatelessWidget {
   final bool isText;
   final bool isInterFamily;
   final Widget? child;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor:
-            backgroundColor ?? Theme.of(context).colorScheme.primary,
+        backgroundColor: backgroundColor ?? theme.colorScheme.primary,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.r),
@@ -47,7 +48,7 @@ class CustomElevatedButton extends StatelessWidget {
                 buttonTitle.tr(),
                 style:
                     titleStyle ??
-                    Theme.of(context).textTheme.titleLarge?.copyWith(
+                    theme.textTheme.titleLarge?.copyWith(
                       fontFamily: isInterFamily ? "Inter" : "Roboto",
                     ),
               ),
