@@ -5,7 +5,7 @@ import 'package:movies_app/domain/entities/requests/signup_request/signup_reques
 import 'package:movies_app/domain/repositories/signup/signup_repository.dart';
 
 @Injectable(as: SignupRepository)
-class SignupRepositoryImpl implements SignupRepository {
+final class SignupRepositoryImpl implements SignupRepository {
   final SignupDataSource _signupDataSource;
 
   const SignupRepositoryImpl(this._signupDataSource);

@@ -5,7 +5,7 @@ import 'package:movies_app/domain/entities/requests/login_request_entity/login_r
 import 'package:movies_app/domain/repositories/login/login_repository.dart';
 
 @Injectable(as: LoginRepository)
-class LoginRepositoryImpl implements LoginRepository {
+final class LoginRepositoryImpl implements LoginRepository {
   final LoginDataSource _loginDataSource;
 
   const LoginRepositoryImpl(this._loginDataSource);

@@ -4,8 +4,9 @@ import 'package:movies_app/domain/entities/requests/login_request_entity/login_r
 import 'package:movies_app/domain/repositories/login/login_repository.dart';
 
 @injectable
-final class LoginWithEmailAndPasswordUseCase {
+class LoginWithEmailAndPasswordUseCase {
   final LoginRepository _loginRepository;
+
   const LoginWithEmailAndPasswordUseCase(this._loginRepository);
 
   Future<Result<void>> invoke({required LoginRequestEntity request}) async {

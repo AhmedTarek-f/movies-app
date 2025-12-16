@@ -4,9 +4,11 @@ import 'package:movies_app/domain/entities/requests/signup_request/signup_reques
 import 'package:movies_app/domain/repositories/signup/signup_repository.dart';
 
 @injectable
-final class SignupUseCase {
+class SignupUseCase {
   final SignupRepository _signupRepository;
+
   const SignupUseCase(this._signupRepository);
+
   Future<Result<void>> invoke({required SignupRequestEntity request}) async {
     return await _signupRepository.signupWithEmailAndPassword(request: request);
   }

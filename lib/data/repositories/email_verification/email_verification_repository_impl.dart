@@ -4,7 +4,8 @@ import 'package:movies_app/data/data_source/email_verification/email_verificatio
 import 'package:movies_app/domain/repositories/email_verification/email_verification_repository.dart';
 
 @Injectable(as: EmailVerificationRepository)
-class EmailVerificationRepositoryImpl implements EmailVerificationRepository {
+final class EmailVerificationRepositoryImpl
+    implements EmailVerificationRepository {
   final EmailVerificationDataSource _emailVerificationDataSource;
 
   const EmailVerificationRepositoryImpl(this._emailVerificationDataSource);
