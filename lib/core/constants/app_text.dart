@@ -5,6 +5,7 @@ abstract final class AppText {
   static const String password = "Password";
   static const String passwordHint = "**********";
   static const String forgotPassword = "Forget Password ?";
+  static const String forgotPassword2 = "Forget Password";
   static const String login = "Login";
   static const String dontHaveAcc = "Don’t Have Account ?";
   static const String createOne = "Create One";
@@ -46,6 +47,11 @@ abstract final class AppText {
   static const String next = "Next";
   static const String finish = "Finish";
   static const String back = "Back";
+
+  // Forget Password
+  static const String resetPasswordMessage =
+      "A request to reset your password has been sent to your email";
+  static const String verifyEmail = "Verify Email";
 
   // Validations
   static const String nameValidation = "Name field is required";
