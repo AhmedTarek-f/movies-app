@@ -4,4 +4,5 @@ abstract class RouteNames {
   static const String signup = "/signupView";
   static const String emailVerification = "/emailVerificationView";
   static const String forgetPassword = "/forgetPasswordView";
+  static const String moviesBottomNavigation = "/moviesBottomNavigationView";
 }

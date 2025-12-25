@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_animations.dart';
 import 'package:movies_app/core/constants/app_images.dart';
 import 'package:movies_app/core/constants/app_text.dart';
+import 'package:movies_app/core/router/route_names.dart';
 import 'package:movies_app/presentation/auth/login/views/widgets/create_new_account.dart';
 import 'package:movies_app/presentation/auth/login/views/widgets/forget_password_button.dart';
 import 'package:movies_app/presentation/auth/login/views/widgets/google_login_button.dart';
@@ -36,10 +37,9 @@ class LoginViewBody extends StatelessWidget {
           );
         } else if (state.loginStatus.isSuccess) {
           FullScreenLoader.stopLoading(context: context);
-          Loaders.showSuccessMessage(
-            message: "Logged in successfully",
-            context: context,
-          );
+          Navigator.of(
+            context,
+          ).pushReplacementNamed(RouteNames.moviesBottomNavigation);
         }
       },
       child: SingleChildScrollView(

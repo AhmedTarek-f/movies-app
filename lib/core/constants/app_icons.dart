@@ -6,4 +6,8 @@ abstract final class AppIcons {
   static const String google = "assets/icons/google.svg";
   static const String identification = "assets/icons/identification.svg";
   static const String phone = "assets/icons/phone.svg";
+  static const String explore = "assets/icons/explore.svg";
+  static const String home = "assets/icons/home.svg";
+  static const String profile = "assets/icons/profile.svg";
+  static const String search = "assets/icons/search.svg";
 }

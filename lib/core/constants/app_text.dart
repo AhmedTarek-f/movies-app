@@ -53,6 +53,12 @@ abstract final class AppText {
       "A request to reset your password has been sent to your email";
   static const String verifyEmail = "Verify Email";
 
+  // Movies Bottom Navigation
+  static const String home = "Home";
+  static const String search = "Search";
+  static const String explore = "Explore";
+  static const String profile = "Profile";
+
   // Validations
   static const String nameValidation = "Name field is required";
   static const String phoneNumberValidation = "Phone number field is required";

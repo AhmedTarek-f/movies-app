@@ -39,12 +39,9 @@ class EmailVerificationViewBody extends StatelessWidget {
                 title: AppText.verified,
                 subTitle: AppText.emailVerified,
                 isAnimation: true,
-                // onPressed: () => Navigator.of(
-                //   context,
-                // ).pushReplacementNamed(RouteNames.homeScreen),
                 onPressed: () => Navigator.of(
                   context,
-                ).pushReplacementNamed(RouteNames.login),
+                ).pushReplacementNamed(RouteNames.moviesBottomNavigation),
               ),
             ),
           );

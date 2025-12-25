@@ -4,6 +4,7 @@ import 'package:movies_app/presentation/auth/email_verification/presentation/vie
 import 'package:movies_app/presentation/auth/forget_password/views/forget_password_view.dart';
 import 'package:movies_app/presentation/auth/login/views/login_view.dart';
 import 'package:movies_app/presentation/auth/signup/views/signup_view.dart';
+import 'package:movies_app/presentation/movies_bottom_navigation/views/movies_bottom_navigation_view.dart';
 import 'package:movies_app/presentation/onboarding/views/onboarding_view.dart';
 
 abstract class AppRouter {
@@ -19,6 +20,10 @@ abstract class AppRouter {
         return MaterialPageRoute(builder: (_) => const EmailVerificationView());
       case RouteNames.forgetPassword:
         return MaterialPageRoute(builder: (_) => const ForgetPasswordView());
+      case RouteNames.moviesBottomNavigation:
+        return MaterialPageRoute(
+          builder: (_) => const MoviesBottomNavigationView(),
+        );
     }
     return null;
   }
