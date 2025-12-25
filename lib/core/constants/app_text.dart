@@ -59,6 +59,10 @@ abstract final class AppText {
   static const String explore = "Explore";
   static const String profile = "Profile";
 
+  // Splash
+  static const String tryAgain = "Try again";
+  static const String reLogin = "Re-Login";
+
   // Validations
   static const String nameValidation = "Name field is required";
   static const String phoneNumberValidation = "Phone number field is required";

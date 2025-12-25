@@ -51,9 +51,7 @@ class GlobalCubit extends Cubit<GlobalState> {
     if (isLoginScreen) {
       if (_auth.currentUser != null) {
         if (_auth.currentUser?.emailVerified ?? false) {
-          emit(
-            state.copyWith(redirectedScreen: RouteNames.moviesBottomNavigation),
-          );
+          emit(state.copyWith(redirectedScreen: RouteNames.splash));
         } else {
           emit(state.copyWith(redirectedScreen: RouteNames.emailVerification));
         }
