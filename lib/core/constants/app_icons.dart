@@ -10,4 +10,7 @@ abstract final class AppIcons {
   static const String home = "assets/icons/home.svg";
   static const String profile = "assets/icons/profile.svg";
   static const String search = "assets/icons/search.svg";
+  static const String exit = "assets/icons/exit.svg";
+  static const String menu = "assets/icons/menu.svg";
+  static const String folder = "assets/icons/folder.svg";
 }

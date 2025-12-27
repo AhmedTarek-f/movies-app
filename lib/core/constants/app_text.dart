@@ -59,6 +59,12 @@ abstract final class AppText {
   static const String explore = "Explore";
   static const String profile = "Profile";
 
+  // Profile
+  static const String watchList = "Watch List";
+  static const String history = "History";
+  static const String editProfile = "Edit Profile";
+  static const String exit = "Exit";
+
   // Splash
   static const String tryAgain = "Try again";
   static const String reLogin = "Re-Login";

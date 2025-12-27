@@ -7,6 +7,7 @@ import 'package:movies_app/presentation/auth/signup/views/signup_view.dart';
 import 'package:movies_app/presentation/movies_bottom_navigation/views/movies_bottom_navigation_view.dart';
 import 'package:movies_app/presentation/onboarding/views/onboarding_view.dart';
 import 'package:movies_app/presentation/splash/views/splash_view.dart';
+import 'package:movies_app/presentation/profile/view/profile_view.dart';
 
 abstract class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -27,6 +28,8 @@ abstract class AppRouter {
         );
       case RouteNames.splash:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case RouteNames.profile:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
     }
     return null;
   }

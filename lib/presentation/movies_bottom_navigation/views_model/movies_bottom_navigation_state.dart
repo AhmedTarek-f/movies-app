@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/presentation/home/views/home_view.dart';
+import 'package:movies_app/presentation/profile/view/profile_view.dart';
 
 final class MoviesBottomNavigationState extends Equatable {
   final List<Widget> taps;
@@ -12,7 +13,7 @@ final class MoviesBottomNavigationState extends Equatable {
       HomeView(),
       Center(child: Text("Search")),
       Center(child: Text("Explore")),
-      Center(child: Text("Profile")),
+      ProfileView(),
     ],
   });
 

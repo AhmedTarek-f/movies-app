@@ -9,4 +9,5 @@ abstract final class ConstKeys {
   static const String profile = "profile";
   static const String serverClientId =
       "116162199423-i5u5d298mu9fteo4om92sfrhk0cqld9o.apps.googleusercontent.com";
+  static const String roboto = "Roboto";
 }
