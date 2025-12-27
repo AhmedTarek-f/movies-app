@@ -89,6 +89,15 @@ class LoginRemoteDataSourceImpl implements LoginDataSource {
               .collection(ConstKeys.users)
               .doc(userData.userId)
               .set(userData.toFireStore());
+          MoviesMethodHelper.userData = userData.toUserDataEntity();
+        } else {
+          final userDoc = await _firestore
+              .collection(ConstKeys.users)
+              .doc(userCredential.user?.uid)
+              .get();
+          MoviesMethodHelper.userData = UserDataModel.fromFireStore(
+            userDoc,
+          ).toUserDataEntity();
         }
         return Success(successData: null);
       },
