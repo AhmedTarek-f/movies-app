@@ -1,7 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 // ignore: must_be_immutable
 class UserDataEntity extends Equatable {
+  @Id()
+  int id = 0;
+
   String? userId;
   String? fullName;
   String? email;

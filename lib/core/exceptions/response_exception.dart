@@ -13,7 +13,7 @@ class ResponseException {
     if (response != null && response.data is Map<String, dynamic>) {
       final data = response.data as Map<String, dynamic>;
       return ResponseException(
-        message: data['error'] ?? AppText.anUnknownErrorOccurred,
+        message: data['status_message'] ?? AppText.anUnknownErrorOccurred,
       );
     } else {
       return empty();

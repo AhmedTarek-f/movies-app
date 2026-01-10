@@ -3,23 +3,16 @@ import 'package:movies_app/core/state_status/state_status.dart';
 
 final class SplashState extends Equatable {
   final StateStatus<void> userDataStatus;
-  final bool isNavigationToLogin;
 
-  const SplashState({
-    this.userDataStatus = const StateStatus.initial(),
-    this.isNavigationToLogin = false,
-  });
+  const SplashState({this.userDataStatus = const StateStatus.initial()});
 
   SplashState copyWith({
     StateStatus<void>? userDataStatus,
     bool? isNavigationToLogin,
   }) {
-    return SplashState(
-      userDataStatus: userDataStatus ?? this.userDataStatus,
-      isNavigationToLogin: isNavigationToLogin ?? this.isNavigationToLogin,
-    );
+    return SplashState(userDataStatus: userDataStatus ?? this.userDataStatus);
   }
 
   @override
-  List<Object?> get props => [userDataStatus, isNavigationToLogin];
+  List<Object?> get props => [userDataStatus];
 }

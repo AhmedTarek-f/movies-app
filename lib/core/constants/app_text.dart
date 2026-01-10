@@ -69,6 +69,10 @@ abstract final class AppText {
   static const String tryAgain = "Try again";
   static const String reLogin = "Re-Login";
 
+  // Home
+  static const String action = "Action";
+  static const String seeMore = "See More";
+
   // Validations
   static const String nameValidation = "Name field is required";
   static const String phoneNumberValidation = "Phone number field is required";

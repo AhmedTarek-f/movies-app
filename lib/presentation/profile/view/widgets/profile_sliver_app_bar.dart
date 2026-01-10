@@ -9,10 +9,10 @@ class ProfileSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
+    return SliverAppBar(
       elevation: 0,
-      expandedHeight: 260,
-      flexibleSpace: FlexibleSpaceBar(
+      expandedHeight: 282.h,
+      flexibleSpace: const FlexibleSpaceBar(
         background: RPadding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(

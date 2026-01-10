@@ -5,7 +5,3 @@ sealed class SplashIntent {
 final class GetUserDataIntent extends SplashIntent {
   const GetUserDataIntent();
 }
-
-final class NavigateToLoginViewIntent extends SplashIntent {
-  const NavigateToLoginViewIntent();
-}

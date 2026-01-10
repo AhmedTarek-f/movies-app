@@ -21,7 +21,7 @@ class MoviesBottomNavigationBar extends StatelessWidget {
       margin: REdgeInsets.symmetric(horizontal: 32, vertical: 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
-        color: theme.colorScheme.onSecondary,
+        color: theme.colorScheme.shadow,
         border: Border.all(
           color: theme.colorScheme.primary.withValues(alpha: 0.5),
         ),

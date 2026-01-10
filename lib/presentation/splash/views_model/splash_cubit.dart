@@ -5,7 +5,6 @@ import 'package:movies_app/core/state_status/state_status.dart';
 import 'package:movies_app/domain/use_cases/splash/get_user_data_use_case.dart';
 import 'package:movies_app/presentation/splash/views_model/splash_intent.dart';
 import 'package:movies_app/presentation/splash/views_model/splash_state.dart';
-import 'package:movies_app/utils/movies_method_helper.dart';
 
 @injectable
 class SplashCubit extends Cubit<SplashState> {
@@ -17,9 +16,6 @@ class SplashCubit extends Cubit<SplashState> {
     switch (intent) {
       case GetUserDataIntent():
         await _getUserData();
-        break;
-      case NavigateToLoginViewIntent():
-        await _navigateToLogin();
         break;
     }
   }
@@ -40,10 +36,5 @@ class SplashCubit extends Cubit<SplashState> {
         emit(state.copyWith(userDataStatus: const StateStatus.initial()));
         break;
     }
-  }
-
-  Future<void> _navigateToLogin() async {
-    MoviesMethodHelper.userData = null;
-    emit(state.copyWith(isNavigationToLogin: true));
   }
 }

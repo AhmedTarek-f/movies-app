@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_images.dart';
-import 'package:movies_app/core/constants/app_text.dart';
 import 'package:movies_app/core/router/route_names.dart';
 import 'package:movies_app/presentation/splash/views_model/splash_cubit.dart';
-import 'package:movies_app/presentation/splash/views_model/splash_intent.dart';
 import 'package:movies_app/presentation/splash/views_model/splash_state.dart';
-import 'package:movies_app/utils/common_widgets/custom_elevated_button.dart';
 import 'package:movies_app/utils/loaders/loaders.dart';
 
 class SplashViewBody extends StatelessWidget {
@@ -16,10 +13,12 @@ class SplashViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final splashCubit = BlocProvider.of<SplashCubit>(context);
     return BlocListener<SplashCubit, SplashState>(
       listener: (BuildContext context, SplashState state) {
         if (state.userDataStatus.isFailure) {
+          Navigator.of(
+            context,
+          ).pushReplacementNamed(RouteNames.moviesBottomNavigation);
           Loaders.showErrorMessage(
             message: state.userDataStatus.error?.message ?? "",
             context: context,
@@ -28,8 +27,6 @@ class SplashViewBody extends StatelessWidget {
           Navigator.of(
             context,
           ).pushReplacementNamed(RouteNames.moviesBottomNavigation);
-        } else if (state.isNavigationToLogin) {
-          Navigator.of(context).pushReplacementNamed(RouteNames.login);
         }
       },
       child: Column(
@@ -43,48 +40,14 @@ class SplashViewBody extends StatelessWidget {
             ),
           ),
           const RSizedBox(height: 52),
-          BlocBuilder<SplashCubit, SplashState>(
-            buildWhen: (previous, current) =>
-                current.userDataStatus.isLoading ||
-                current.userDataStatus.isFailure,
-            builder: (context, state) {
-              if (state.userDataStatus.isFailure) {
-                return RPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: [
-                      CustomElevatedButton(
-                        onPressed: () async {
-                          await splashCubit.doIntent(
-                            intent: const GetUserDataIntent(),
-                          );
-                        },
-                        buttonTitle: AppText.tryAgain,
-                      ),
-                      const RSizedBox(height: 16),
-                      CustomElevatedButton(
-                        onPressed: () {
-                          splashCubit.doIntent(
-                            intent: const NavigateToLoginViewIntent(),
-                          );
-                        },
-                        buttonTitle: AppText.reLogin,
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Center(
-                  child: RSizedBox(
-                    width: 30,
-                    height: 30,
-                    child: CircularProgressIndicator(
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                );
-              }
-            },
+          Center(
+            child: RSizedBox(
+              width: 30,
+              height: 30,
+              child: CircularProgressIndicator(
+                color: theme.colorScheme.primary,
+              ),
+            ),
           ),
         ],
       ),

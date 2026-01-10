@@ -62,3 +62,4 @@ android/app/src/main/java/**/GeneratedPluginRegistrant.java
 lib/generated_plugin_registrant.dart
 
 *.env
+lib/objectbox-model.json
